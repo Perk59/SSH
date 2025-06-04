@@ -1,0 +1,32 @@
+# .github/workflows/deploy.yml
+:contentReference[oaicite:15]{index=15}
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    :contentReference[oaicite:16]{index=16}
+    steps:
+      :contentReference[oaicite:17]{index=17}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Run Tests
+        run: npm install && npm test
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /path/to/your/app
+            git pull origin main
+            npm install --production
+            pm2 reload all
