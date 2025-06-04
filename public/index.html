@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web SSH Client</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/xterm/css/xterm.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="saved-connections">
+                <h3>保存された接続</h3>
+                <div id="connectionList"></div>
+                <button id="newConnection" class="icon-button">
+                    <span class="material-icons">add</span>
+                    新規接続
+                </button>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="connection-form" id="connectionForm">
+                <div class="form-header">
+                    <h2>SSH接続設定</h2>
+                    <div class="form-actions">
+                        <button id="saveConnection" class="icon-button">
+                            <span class="material-icons">bookmark</span>
+                            保存
+                        </button>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="connectionName">接続名</label>
+                        <input type="text" id="connectionName" placeholder="接続名を入力" />
+                    </div>
+                    <div class="form-group">
+                        <label for="host">ホスト名</label>
+                        <input type="text" id="host" placeholder="例: example.com" />
+                    </div>
+                    <div class="form-group">
+                        <label for="username">ユーザー名</label>
+                        <input type="text" id="username" placeholder="例: admin" />
+                    </div>
+                    <div class="form-group">
+                        <label for="port">ポート</label>
+                        <input type="number" id="port" value="22" />
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="authType">認証方法</label>
+                        <select id="authType">
+                            <option value="password">パスワード認証</option>
+                            <option value="privateKey">SSH鍵認証</option>
+                        </select>
+                    </div>
+                    <div id="passwordAuth" class="form-group full-width">
+                        <label for="password">パスワード</label>
+                        <input type="password" id="password" placeholder="パスワード" />
+                    </div>
+                    <div id="keyAuth" class="form-group full-width" style="display:none;">
+                        <label>SSH鍵</label>
+                        <div class="key-input-container">
+                            <label for="privateKeyFile" class="file-upload-label">
+                                <span class="material-icons">upload_file</span>
+                                秘密鍵ファイルを選択
+                                <input type="file" id="privateKeyFile" class="file-input" />
+                            </label>
+                            <span id="selectedFileName">ファイルが選択されていません</span>
+                        </div>
+                        <input type="password" id="passphrase" placeholder="パスフレーズ（必要な場合）" />
+                        <textarea id="privateKey" placeholder="または秘密鍵を直接入力"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button id="connect" class="primary-button">
+                        <span class="material-icons">terminal</span>
+                        接続
+                    </button>
+                </div>
+            </div>
+            <div id="terminal"></div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/xterm/lib/xterm.js"></script>
+    <script src="https://unpkg.com/xterm-addon-fit/lib/xterm-addon-fit.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
